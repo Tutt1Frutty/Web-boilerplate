@@ -1,4 +1,4 @@
-const initTeachinderUI = (): void => {
+export const initTeachinderUI = (): void => {
     const addTeacherModal = document.getElementById('add-teacher-modal') as HTMLElement | null;
     const teacherInfoModal = document.getElementById('teacher-info-modal') as HTMLElement | null;
 

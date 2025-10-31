@@ -1,21 +1,23 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const includeEls: HTMLElement[] = Array.from(
-        document.querySelectorAll<HTMLElement>('[data-include]')
-    );
+import {initTeachinderUI} from "./index";
 
-    await Promise.all(
-        includeEls.map(async (el: HTMLElement) => {
-            const url: string | null = el.getAttribute('data-include');
-            if (!url) return;
+document.addEventListener('DOMContentLoaded', async (): Promise<void> => {
+    const includes = document.querySelectorAll<HTMLElement>('[data-include]');
 
-            try {
-                const res: Response = await fetch(url);
-                el.outerHTML = await res.text();
-            } catch (e) {
-                console.error('Failed to load component:', url, e);
+    for (const el of includes) {
+        const file = el.getAttribute('data-include');
+        if (!file) continue;
+
+        try {
+            const response = await fetch(file);
+            if (response.ok) {
+                el.innerHTML = await response.text();
+            } else {
+                el.innerHTML = `<p style="color:red;">Couldn't load ${file}</p>`;
             }
-        })
-    );
-
-    document.dispatchEvent(new CustomEvent('componentsLoaded'));
+        } catch (error) {
+            el.innerHTML = `<p style="color:red;">Error loading ${file}: ${(error as Error).message}</p>`;
+        }
+    }
+    document.dispatchEvent(new Event('componentsLoaded'));
+    initTeachinderUI();
 });

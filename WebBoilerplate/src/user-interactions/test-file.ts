@@ -1,42 +1,28 @@
-import {randomUserMock, additionalUsers} from './FE4U-Lab2-mock';
-import {addFieldsToUsers, formatUsersAndAddFields, mergeUsers} from './formatting';
-import {validateUsers} from './checks';
-import {filterUsers} from "./filters";
-import {FilterParams} from "./interfaces";
-import {sortUsers} from './sorting';
-import {toJson} from './tools'
-import {findUsers} from "./search";
-import {calcPercentageOfFoundUsers} from "./percentages";
+import validatedUsers from '../results/validatedUsers.json' assert { type: 'json' };
+import { usersFilterUtil } from "./filters";
+import {userFilteredPercentUtil} from "./percentages";
+import {usersSortUtil} from "./sorting";
+import {userSearchUtil} from "./search";
 
-const formattedUsers = formatUsersAndAddFields(randomUserMock);
-toJson(formattedUsers, './../results/formatted.json');
-const mergedUsers = mergeUsers(formattedUsers, addFieldsToUsers(additionalUsers));
-toJson(mergedUsers, './../results/mergedUsers.json');
-console.log(`Formatted users num: ${formattedUsers.length}`);
-console.log(`Additional users num: ${additionalUsers.length}`);
-console.log(`Merged users num: ${mergedUsers.length} \n`);
+const filteredUsers = usersFilterUtil(
+    validatedUsers,
+    {
+        // genders: ['Male'],
+        // favorites: [true, false],
+        // ageRange: { max: 70 },
+        // countries: ['United States'],
+        // photos: [true],
+    }
+);
 
-const validatedUsers= validateUsers(mergedUsers);
-toJson(validatedUsers, './../results/validatedUsers.json')
-console.log(`Num of validated users: ${validatedUsers.length}\n`);
-
-const filters: FilterParams = {
-    gender: "Male",
-    age: 38,
-};
-const filteredUsers = filterUsers(validatedUsers, filters);
-toJson(filteredUsers, './../results/filteredUsers.json')
-console.log(`Num of filtered users: ${filteredUsers.length}\n`);
-
-const sortedUsers = sortUsers(validatedUsers, 'country', 'desc');
-toJson(sortedUsers, './../results/sortedUsers.json')
-console.log(`Users were sorted\n`);
-
-const searchParam = '20-30';
-
-const searchResult = findUsers(validatedUsers, searchParam);
-toJson(searchResult, './../results/foundUsers.json');
-console.log(`Users found: ${searchResult.length}\n`);
-
-const percent = calcPercentageOfFoundUsers(validatedUsers, searchParam);
-console.log(`Percent of found users: ${percent}`);
+console.log(filteredUsers.length);
+console.log(filteredUsers);
+//
+// const usersSorted = usersSortUtil(validatedUsers, { sortBy: 'age', order: 'asc' });
+// console.log(usersSorted);
+//
+// const usersSearched = userSearchUtil(validatedUsers, 'Dar');
+// console.log(usersSearched);
+//
+// const searchWithPercent = userFilteredPercentUtil(validatedUsers, 24, userSearchUtil);
+// console.log(searchWithPercent);

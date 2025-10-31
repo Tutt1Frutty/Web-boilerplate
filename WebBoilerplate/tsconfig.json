@@ -1,16 +1,29 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "CommonJS",
+    "module": "esnext",
+    "target": "es2020",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
     "outDir": "./build/js",
-    "rootDir": "./src",
-    "allowJs": true,
-    "noImplicitAny": false,
-    "strict": true,
-    "esModuleInterop": true,
+    "incremental": true,
+    "useDefineForClassFields": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "sourceMap": true
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "composite": true,
+    "resolveJsonModule": true,
+    "lib": ["DOM", "ES2020", "DOM.Iterable", "ScriptHost"]
   },
-  "include": ["src/js/**/*", ".eslintrc.cjs", "src/global.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "./src/**/*",
+    "./server/**/*",
+    "**/*.json",
+    ".eslintrc.cjs"
+  ],
+  "exclude": ["./node_modules", "test", "./build/js"]
 }

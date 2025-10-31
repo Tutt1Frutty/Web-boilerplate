@@ -1,42 +1,46 @@
-import {FormattedUser} from './interfaces';
+import { isNil, isString } from "./tools";
 
-type SortingField = 'full_name' | 'age' | 'b_day' | 'country';
-type Order = 'asc' | 'desc';
+type SortOrder = "asc" | "desc";
 
-export function sortUsers(users: FormattedUser[], field: SortingField, order: Order = 'asc'): FormattedUser[] {
-    if (isStringField(field)) {
-        return sortUsersByStringField(users, field, order);
-    } else if (field === 'age') {
-        return sortUsersByNumField(users, field, order);
-    } else {
-        return sortUsersByDateField(users, field, order);
+export interface Sort<T> {
+    sortBy: keyof T;
+    order: SortOrder;
+}
+
+export const parseSort = <T extends Record<string, any>>(
+    sort: Partial<Sort<T>> = {}
+): Sort<T> | null => {
+    const keysArr = Object.keys(sort);
+    if (keysArr.length !== 2 || !keysArr.includes("order") || !keysArr.includes("sortBy")) {
+        return null;
     }
-}
 
-function isStringField(field: string): boolean {
-    return field === 'full_name' || field === 'country';
-}
+    const { order, sortBy } = sort as Sort<T>;
 
-function sortUsersByStringField(users: FormattedUser[], field: SortingField, order: Order = 'asc'): FormattedUser[] {
-    return users.sort((a, b) => {
-        const fieldA = a[field] as string;
-        const fieldB = b[field] as string;
-        return order === 'asc' ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
+    if (!["asc", "desc"].includes(order)) return null;
+    return { order, sortBy };
+};
+
+export const usersSortUtil = <T extends Record<string, any>>(
+    users: T[],
+    sort: Partial<Sort<T>> = {}
+): T[] => {
+    const parsedSort = parseSort(sort);
+    if (isNil(parsedSort)) return users;
+
+    const { order, sortBy } = parsedSort;
+    const orderNum = order === "asc" ? 1 : -1;
+
+    return [...users].sort((a, b) => {
+        const va = a?.[sortBy];
+        const vb = b?.[sortBy];
+
+        if (isString(va) && isString(vb)) {
+            return va.localeCompare(vb) * orderNum;
+        }
+
+        if (va > vb) return 1 * orderNum;
+        if (va < vb) return -1 * orderNum;
+        return 0;
     });
-}
-
-function sortUsersByNumField(users: FormattedUser[], field: SortingField, order: Order = 'asc'): FormattedUser[] {
-    return users.sort((a, b) => {
-        const fieldA = a[field] as number;
-        const fieldB = b[field] as number;
-        return order === 'asc' ? fieldA - fieldB : fieldB - fieldA;
-    });
-}
-
-function sortUsersByDateField(users: FormattedUser[], field: SortingField, order: Order = 'asc'): FormattedUser[] {
-    return users.sort((a, b) => {
-        const fieldA = new Date(a[field] as string);
-        const fieldB = new Date(b[field] as string);
-        return order === 'asc' ? fieldA.getTime() - fieldB.getTime() : fieldB.getTime() - fieldA.getTime();
-    });
-}
+};

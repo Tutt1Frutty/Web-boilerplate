@@ -22,13 +22,13 @@
 .modal {
     border-radius: 3px;
     overflow: hidden;
-    position: absolute;
+    position: fixed;
     z-index: 10001;
     left: 0;
     right: 0;
     margin-inline: auto;
     width: fit-content;
-    top: 50vh;
+    top: 40vh;
     transform: translateY(-50%);
     margin-top: 100px;
     box-shadow: 0 24px 64px color-mix(in srgb, var(--alternative-color) 30%, transparent),
@@ -228,4 +228,11 @@
     color: var(--tiffany-blue);
     text-decoration: none;
     margin: 15px 0 15px 0;
+}
+
+.teacher-info-wrapper-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
 }

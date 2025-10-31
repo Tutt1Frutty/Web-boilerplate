@@ -23,7 +23,7 @@ function addMissingFields(user: any): FormattedUser {
     return {
         ...user,
         id: user.id || generateId(13),
-        favourite: user.favourite || false,
+        favorite: user.favorite || false,
         course: user.course || getRandomCourse(),
         bg_color: user.bg_color || "#ffffff",
         note: user.note || "Note",

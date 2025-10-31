@@ -17,13 +17,21 @@
     background-color: color-mix(in srgb, var(--alternative-color) 3%, transparent);
 }
 
-.statistics-table th:hover::after {
+.statistics-table th::after {
     position: absolute;
     top: 40%;
     transform: translateY(-50%);
-    content: "↑";
+    content: "";
     color: var(--tiffany-blue);
     margin-left: 10px;
+}
+
+.statistics-table th.is-sorted-asc::after {
+    content: "↓";
+}
+
+.statistics-table th.is-sorted-desc::after {
+    content: "↑";
 }
 
 .statistics-table thead th {
@@ -58,16 +66,25 @@
     list-style: none;
     padding-left: 0;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     gap: 24px;
 }
 
-.navigation-buttons a {
-    text-decoration: none;
+.navigation-buttons button {
     color: var(--tiffany-blue);
     font: inherit;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    appearance: none;
 }
 
-.navigation-buttons a:hover {
+.navigation-buttons button:hover {
+    color: color-mix(in srgb, var(--tiffany-blue) 30%, var(--alternative-color));
+}
+
+.navigation-buttons .is-active {
     color: color-mix(in srgb, var(--tiffany-blue) 30%, var(--alternative-color));
 }

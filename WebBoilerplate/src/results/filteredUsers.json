@@ -1,0 +1,58 @@
+[
+  {
+    "gender": "Male",
+    "title": "Mr",
+    "full_name": "Tim Roy",
+    "city": "Créteil",
+    "state": "Haut-Rhin",
+    "country": "France",
+    "postcode": 65772,
+    "coordinates": {
+      "latitude": "-63.5272",
+      "longitude": "115.8694"
+    },
+    "timezone": {
+      "offset": "+5:00",
+      "description": "Ekaterinburg, Islamabad, Karachi, Tashkent"
+    },
+    "email": "tim.roy@example.com",
+    "date_of_birth": "1983-09-20T17:50:52.872Z",
+    "age": 38,
+    "phone": "05-70-80-69-86",
+    "picture_large": "https://randomuser.me/api/portraits/men/20.jpg",
+    "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/20.jpg",
+    "id": "VMIWQZHA3K2X0",
+    "favourite": false,
+    "course": "Law",
+    "bg_color": "#ffffff",
+    "note": "Note"
+  },
+  {
+    "gender": "Male",
+    "title": "Mr",
+    "full_name": "Lucas Kristensen",
+    "city": "Allinge",
+    "state": "Sjælland",
+    "country": "Denmark",
+    "postcode": 94452,
+    "coordinates": {
+      "latitude": "-74.1864",
+      "longitude": "23.5624"
+    },
+    "timezone": {
+      "offset": "+9:30",
+      "description": "Adelaide, Darwin"
+    },
+    "email": "lucas.kristensen@example.com",
+    "date_of_birth": "1983-03-31T14:04:35.291Z",
+    "age": 38,
+    "phone": "67399596",
+    "picture_large": "https://randomuser.me/api/portraits/men/3.jpg",
+    "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/3.jpg",
+    "id": "5WUSU4BK98E68",
+    "favourite": false,
+    "course": "Physics",
+    "bg_color": "#ffffff",
+    "note": "Note"
+  }
+]

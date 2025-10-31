@@ -1,45 +1,98 @@
-.favourites-list {
-    justify-content: center;
-    display: grid;
-    grid-template-columns: repeat(5, 152px);
-    gap: 50px;
+.favourites {
+    margin-bottom: 80px;
 }
 
 .favourites-section {
-    --pseudo-carousel-height: 236px;
-    height: var(--pseudo-carousel-height);
+    --card-width: 240px;
+    --gap: 24px;
+    --btn-size: 44px;
+    --btn-offset: 8px;
+    position: relative;
+    isolation: isolate;
 }
 
-.favourites-section button {
+.favourites-list {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--gap);
+    align-items: stretch;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    padding-inline: calc(var(--btn-size) + var(--btn-offset));
+    scroll-snap-type: x proximity;
+}
+
+.favourites-section .teacher-card {
+    flex: 0 0 var(--card-width);
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.favourites-section .wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.favourites-list {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.list-prev-button,
+.list-next-button {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    width: var(--btn-size);
+    height: var(--btn-size);
+    display: grid;
+    place-items: center;
     border: none;
     appearance: none;
-    background-color: transparent;
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--main-color) 90%, transparent);
     cursor: pointer;
-    height: 80px;
-    margin-top: calc((var(--pseudo-carousel-height) - 80px) / 2);
+    z-index: 101;
+
+    &:hover { background-color: color-mix(in srgb, var(--main-color) 100%, transparent); }
+    &:focus-visible { outline: 2px solid var(--accent-color); }
 }
 
-.favourites-section button:hover img{
-    opacity: 1;
+.list-prev-button { left: var(--btn-offset); }
+.list-next-button { right: var(--btn-offset); }
+
+.list-prev-button img,
+.list-next-button img {
+    width: 50%;
+    height: auto;
+    max-width: 100%;
+    display: block;
 }
 
-.favourites-section button img {
-    height: 100%;
-    opacity: 0.4;
+.list-prev-button img { transform: rotate(180deg); }
+
+@media (max-width: 768px) {
+    .pseudo-carousel {
+        --card-width: 200px;
+        --btn-size: 40px;
+        --gap: 16px;
+    }
 }
 
-#list-prev-button-image {
-    transform: rotate(180deg);
-}
-
-.list-prev-button {
-    float: left
-}
-
-.list-next-button {
-    float: right;
-}
-
-.favourites {
-    margin-bottom: 80px;
+@media (max-width: 480px) {
+    .pseudo-carousel {
+        --card-width: 180px;
+        --btn-size: 36px;
+        --gap: 12px;
+    }
 }

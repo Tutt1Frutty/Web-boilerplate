@@ -8,17 +8,25 @@
   <title>teachinder</title>
 </head>
 <body>
-<div data-include="/src/components/header.html"></div>
+<div data-include="src/components/header.html"></div>
 <hr>
-<div data-include="/src/components/top-teachers.html"></div>
+<div data-include="src/components/top-teachers.html"></div>
 <hr>
-<div data-include="/src/components/statistics.html"></div>
+<div data-include="src/components/statistics.html"></div>
 <hr>
-<div data-include="/src/components/favourites.html"></div>
+<div data-include="src/components/favourites.html"></div>
 <hr>
-<div data-include="/src/components/footer.html"></div>
-<div data-include="/src/components/modals.html"></div>
+<div data-include="src/components/footer.html"></div>
+<div data-include="src/components/modals.html"></div>
 <script type="module" src="src/script/component-loader.ts"></script>
+<script type="module" src="src/script/top-teachers/top-teachers.ts"></script>
+<script type="module" src="src/script/top-teachers/top-teachers-filter.ts"></script>
+<script type="module" src="src/script/top-teachers/top-teachers-search.ts"></script>
+<script type="module" src="src/script/favourites/favourites-list.ts"></script>
+<script type="module" src="src/script/statistics/statistics.ts"></script>
+<script type="module" src="src/script/modal/buttons.ts"></script>
+<script type="module" src="src/script/modal/teacher-info.ts"></script>
+<script type="module" src="src/script/modal/add-teacher.ts"></script>
 <script type="module" src="src/script/index.ts"></script>
 </body>
 </html>
