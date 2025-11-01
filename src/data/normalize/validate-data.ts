@@ -6,9 +6,9 @@ import {
     startsWithCapitalCharEveryWord
 } from './validate-string';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { writeFile } from 'fs/promises';
 import {User} from "./users-normalization";
+import {importMetaDir} from "../../utils/import-meta";
 
 export interface ValidationResult {
     changedIds: Array<number | string>;
@@ -45,10 +45,11 @@ export const userValidateDataUtil = (data: User[]): ValidationResult => {
 
 export const userValidateDataAndSave = async (
     data: User[],
-    filename = 'users-validated.json',
-    baseUrl: string = import.meta.url
+    filename = 'users-validated.json'
 ): Promise<void> => {
-    const outPath = path.join(path.dirname(fileURLToPath(baseUrl)), filename);
+    const outDir = importMetaDir(__filename);
+    const outPath = path.join(outDir, filename);
+
     const result = userValidateDataUtil(data);
     await writeFile(outPath, JSON.stringify(result, null, 2));
 };

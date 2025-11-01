@@ -51,7 +51,7 @@ document.addEventListener('componentsLoaded', async () => {
             alert('New teacher added successfully!');
             addTeacherForm.reset();
         } catch (error) {
-            alert(`Error adding teacher: ${error}`);
+            alert(`Error adding teacher: ${error.message}`);
         }
     });
 });

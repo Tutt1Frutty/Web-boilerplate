@@ -1,4 +1,4 @@
-import db from "../../../server/db.json" assert { type: "json" };
+import db from "../../../server/db.json";
 import { isNull } from '../../user-interactions/tools';
 import {User} from "../../data/normalize/users-normalization";
 

@@ -1,12 +1,11 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { writeFile } from 'fs/promises';
 import { yearsPassedUtil } from './years-passed';
 import { getRandomCourseUtil } from './get-random-course';
-import { UserDataClass } from '../user-data-class';
 import {UserLike} from "./user-get-comparable-id";
 import {normalizePhoneNumber} from "./phone-normalization";
 import {capitalizeWord, isNil, isObject } from "../../user-interactions/tools";
+import {importMetaDir} from "../../utils/import-meta";
 
 interface RawUser {
     gender?: string;
@@ -167,10 +166,10 @@ export const userNormalizeDataUtil = (data: RawUser[]): User[] => {
 
 export const userNormalizeAndSave = async (
     data: UserLike[],
-    filename = 'users.json',
-    baseUrl = import.meta.url
+    filename = 'users.json'
 ) => {
-    const outPath = path.join(path.dirname(fileURLToPath(baseUrl)), filename);
+    const outDir = importMetaDir(__filename);
+    const outPath = path.join(outDir, filename);
     const normalizedUsers = userNormalizeDataUtil(data);
     await writeFile(outPath, JSON.stringify(normalizedUsers, null, 2));
 };

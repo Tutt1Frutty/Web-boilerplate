@@ -1,5 +1,5 @@
 import {splitName, isNull, getInitials} from '../../user-interactions/tools'
-import db from "../../../server/db.json" assert { type: "json" };
+import db from "../../../server/db.json";
 import {User} from "../../data/normalize/users-normalization";
 import {Filter, usersFilterUtil} from "../../user-interactions/filters";
 import {userSearchUtil} from "../../user-interactions/search";

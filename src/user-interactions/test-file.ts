@@ -1,4 +1,4 @@
-import validatedUsers from '../results/validatedUsers.json' assert { type: 'json' };
+import validatedUsers from '../results/validatedUsers.json';
 import { usersFilterUtil } from "./filters";
 import {userFilteredPercentUtil} from "./percentages";
 import {usersSortUtil} from "./sorting";

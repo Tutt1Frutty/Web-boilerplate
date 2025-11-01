@@ -1,4 +1,4 @@
-import db from "../../../server/db.json" assert { type: "json" };
+import db from "../../../server/db.json";
 
 const countriesList = new Set<string>(
     db.users
