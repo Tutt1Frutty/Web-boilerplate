@@ -2,7 +2,6 @@ import { User } from "../../data/normalize/users-normalization";
 import {Filter, usersFilterUtil} from "../../user-interactions/filters";
 import { userSearchUtil } from "../../user-interactions/search";
 import { usersSortUtil } from "../../user-interactions/sorting";
-import db from "../../../server/db.json";
 import { isNil } from "../../user-interactions/tools";
 import {setupFilters} from "../top-teachers/top-teachers-filter";
 import {setupSearch} from "../top-teachers/top-teachers-search";
@@ -28,7 +27,8 @@ let filterState: Filter = {};
 let searchState = "";
 
 const getUsers = async (): Promise<User[]> => {
-    let users: User[] = db.users.slice();
+    const fetchedUsers = await(await fetch('/api/users')).json();
+    let users: User[] = fetchedUsers.users.slice();
     users = usersFilterUtil(users, filterState)
     if (searchState !== '') {
         users = userSearchUtil(users, searchState);

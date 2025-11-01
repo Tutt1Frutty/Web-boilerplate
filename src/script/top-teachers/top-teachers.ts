@@ -1,11 +1,12 @@
 import {splitName, isNull, getInitials} from '../../user-interactions/tools'
-import db from "../../../server/db.json";
 import {User} from "../../data/normalize/users-normalization";
 import {Filter, usersFilterUtil} from "../../user-interactions/filters";
 import {userSearchUtil} from "../../user-interactions/search";
 import {setupFilters} from "./top-teachers-filter";
 import {addCountryOptions} from "./countries-options-filters";
 import {setupSearch} from "./top-teachers-search";
+import {setupLoadMoreTopTeachers} from "./top-teachers-load-more";
+import {setupDeleteLessTopTeachers} from "./top-teachers-delete-random";
 
 const createTeacherCard = (teacher: User): string => {
     const picture = !isNull(teacher.picture_large)
@@ -36,7 +37,7 @@ const createTeacherCard = (teacher: User): string => {
 `;
 }
 
-export function loadTenTeachers(teachers: User[]): boolean {
+export function loadTeachers(teachers: User[]): boolean {
     const container = document.querySelector('.teachers-list');
     if (!container) {
         return false;
@@ -44,7 +45,6 @@ export function loadTenTeachers(teachers: User[]): boolean {
     container.innerHTML = teachers
         .slice()
         .sort(() => Math.random() - 0.5)
-        .slice(0, 10)
         .map(createTeacherCard)
         .join("");
     return true;
@@ -53,8 +53,9 @@ export function loadTenTeachers(teachers: User[]): boolean {
 let filterState = {};
 let searchState = '';
 
-const getUsers = (): User[] => {
-    let filtered = usersFilterUtil(db.users, filterState);
+const getUsers = async () => {
+    const users = await(await fetch('/api/users')).json();
+    let filtered = usersFilterUtil(users.users, filterState);
     if (searchState !== '') {
         filtered = userSearchUtil(filtered, searchState);
     }
@@ -62,15 +63,17 @@ const getUsers = (): User[] => {
     return filtered
 }
 
-document.addEventListener('componentsLoaded', () => {
-    loadTenTeachers(getUsers());
+document.addEventListener('componentsLoaded', async () => {
+    loadTeachers(await getUsers());
     addCountryOptions();
-    setupFilters((filter: Filter) => {
+    setupFilters(async (filter: Filter) => {
         filterState = filter;
-        loadTenTeachers(getUsers());
+        loadTeachers(await getUsers());
     });
-    setupSearch((query: string) => {
+    setupSearch(async (query: string) => {
         searchState = query;
-        loadTenTeachers(getUsers());
+        loadTeachers(await getUsers());
     });
+    setupLoadMoreTopTeachers(async () => loadTeachers(await getUsers()));
+    setupDeleteLessTopTeachers(async () => loadTeachers(await getUsers()));
 });

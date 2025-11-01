@@ -1,5 +1,3 @@
-import db from "../../../server/db.json";
-
 import {splitName, isNull, getInitials} from '../../user-interactions/tools'
 import {User} from "../../data/normalize/users-normalization";
 
@@ -51,6 +49,7 @@ const initCarousel = (container) => {
     });
 };
 
-document.addEventListener("componentsLoaded", () => {
-    loadFavourites(db.users);
+document.addEventListener("componentsLoaded", async () => {
+    const users = await(await fetch('/api/users')).json();
+    loadFavourites(users.users);
 });

@@ -1,7 +1,8 @@
-import db from "../../../server/db.json";
+const users = await(await fetch('/api/users')).json();
 
 const countriesList = new Set<string>(
-    db.users
+
+    users.users
         .map((u) => u.country)
         .filter((c): c is string => typeof c === "string" && c.trim().length > 0)
 );

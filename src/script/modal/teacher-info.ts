@@ -1,4 +1,3 @@
-import db from "../../../server/db.json";
 import { isNull } from '../../user-interactions/tools';
 import {User} from "../../data/normalize/users-normalization";
 
@@ -37,7 +36,7 @@ const createTeacherInfoModal = (teacher: User) => {
 
 const changeFavourite = async (id, value) => {
     const resp = await fetch("/api/set-favourite", {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, value }),
     });
@@ -64,11 +63,12 @@ const openTeacherInfoModal = (teacher: User) => {
     }
 };
 
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
     const card = (e.target as HTMLElement).closest(".teacher-card[data-id]") as HTMLElement | null;
     if (!card) return;
 
-    const teacher: User = db.users.find((u: User) => String(u.id) === card.dataset.id);
+    const users = await(await fetch('/api/users')).json();
+    const teacher: User = users.users.find((u: User) => String(u.id) === card.dataset.id);
 
     if (teacher) {
         openTeacherInfoModal(teacher);
